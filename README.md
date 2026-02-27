@@ -1,5 +1,7 @@
 # Blinq Campus Backend
 
+# Still in development, everything currently runs locally
+
 Backend services for Blinq Campus (API, events, media, and proxy services).
 
 This repository is a customized fork for local development and deployment. Some internal crate and binary names still use `revolt-*` for compatibility.
