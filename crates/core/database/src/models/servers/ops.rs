@@ -17,6 +17,9 @@ pub trait AbstractServers: Sync + Send {
     /// Fetch a servers by their ids
     async fn fetch_servers<'a>(&self, ids: &'a [String]) -> Result<Vec<Server>>;
 
+    /// Fetch all servers
+    async fn fetch_all_servers(&self) -> Result<Vec<Server>>;
+
     /// Update a server with new information
     async fn update_server(
         &self,

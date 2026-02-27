@@ -9,6 +9,7 @@ use revolt_result::{create_error, Result};
 use rocket::{serde::json::Json, State};
 use rocket_empty::EmptyResponse;
 use validator::Validate;
+use crate::util::dm_audit;
 
 /// # Bulk Delete Messages
 ///
@@ -50,6 +51,15 @@ pub async fn bulk_delete_messages(
     calculate_channel_permissions(&mut query)
         .await
         .throw_if_lacking_channel_permission(ChannelPermission::ManageMessages)?;
+
+    for id in &options.ids {
+        if let Ok(message) = db.fetch_message(id).await {
+            if message.channel == target.id {
+                let channel = db.fetch_channel(&message.channel).await?;
+                dm_audit::log_delete(db, &user.id, &channel, &message).await?;
+            }
+        }
+    }
 
     Message::bulk_delete(db, target.id, options.ids)
         .await

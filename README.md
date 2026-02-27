@@ -151,6 +151,47 @@ cargo run --bin revolt-pushd
 # mold -run ./scripts/start.sh
 ```
 
+### Quick Start: Backend (Mac/Windows)
+
+Use this if you just want to get backend services running locally:
+
+```bash
+# 1) start Docker Desktop first, then:
+docker compose up -d
+
+# 2) start all Rust backend services in one command
+./scripts/start.sh
+```
+
+What you should see:
+- `Starting revolt-delta`
+- `Starting revolt-bonfire`
+- `Starting revolt-autumn`
+- `Starting revolt-january`
+- `Starting revolt-gifbox`
+- and service logs without immediate exits
+
+Useful checks:
+
+```bash
+# verify local dependencies are up
+docker compose ps
+
+# verify API/events ports are listening
+lsof -nP -iTCP:14702 -sTCP:LISTEN
+lsof -nP -iTCP:14703 -sTCP:LISTEN
+```
+
+Stop everything:
+
+```bash
+# stop Rust services started by start.sh
+pkill -f 'target/debug/revolt-'
+
+# stop Docker dependencies
+docker compose down
+```
+
 You can start a web client by doing the following:
 
 ```bash
