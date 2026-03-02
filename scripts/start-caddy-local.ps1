@@ -19,15 +19,21 @@ if (-not (Test-Path $HostsPath)) {
 
 $hostsContent = Get-Content -Raw $HostsPath
 <<<<<<< HEAD
+<<<<<<< HEAD
 if ($hostsContent -notmatch "(^|\s)local\.(blinqcampus|revolt)\.chat(\s|$)") {
     Write-Host "Missing hosts entry for local.blinqcampus.chat."
     Write-Host "Run PowerShell as Administrator and execute:"
     Write-Host '  Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n127.0.0.1 local.blinqcampus.chat"'
 =======
+=======
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 if ($hostsContent -notmatch "(^|\s)local\.revolt\.chat(\s|$)") {
     Write-Host "Missing hosts entry for local.revolt.chat."
     Write-Host "Run PowerShell as Administrator and execute:"
     Write-Host '  Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n127.0.0.1 local.revolt.chat"'
+<<<<<<< HEAD
+>>>>>>> e99df03359637127adadf91224df853828eb0569
+=======
 >>>>>>> e99df03359637127adadf91224df853828eb0569
     exit 1
 }

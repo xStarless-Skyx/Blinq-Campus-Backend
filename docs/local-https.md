@@ -17,7 +17,11 @@ Ensure local DNS host exists:
 
 ```bash
 <<<<<<< HEAD
+<<<<<<< HEAD
 echo "127.0.0.1 local.blinqcampus.chat" | sudo tee -a /etc/hosts
+=======
+echo "127.0.0.1 local.revolt.chat" | sudo tee -a /etc/hosts
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
 echo "127.0.0.1 local.revolt.chat" | sudo tee -a /etc/hosts
 >>>>>>> e99df03359637127adadf91224df853828eb0569
@@ -41,7 +45,11 @@ Add host entry (run as Administrator):
 
 ```powershell
 <<<<<<< HEAD
+<<<<<<< HEAD
 Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n127.0.0.1 local.blinqcampus.chat"
+=======
+Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n127.0.0.1 local.revolt.chat"
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
 Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n127.0.0.1 local.revolt.chat"
 >>>>>>> e99df03359637127adadf91224df853828eb0569
@@ -66,7 +74,11 @@ Web client (example):
 
 ```bash
 <<<<<<< HEAD
+<<<<<<< HEAD
 echo "VITE_API_URL=https://local.blinqcampus.chat:24702" > .env.local
+=======
+echo "VITE_API_URL=https://local.revolt.chat:24702" > .env.local
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
 echo "VITE_API_URL=https://local.revolt.chat:24702" > .env.local
 >>>>>>> e99df03359637127adadf91224df853828eb0569
@@ -91,6 +103,7 @@ Windows (PowerShell):
 
 This proxies:
 <<<<<<< HEAD
+<<<<<<< HEAD
 - `https://local.blinqcampus.chat:24701` -> `http://127.0.0.1:14701`
 - `https://local.blinqcampus.chat:24702` -> `http://127.0.0.1:14702`
 - `https://local.blinqcampus.chat:24703` -> `http://127.0.0.1:14703`
@@ -98,20 +111,30 @@ This proxies:
 - `https://local.blinqcampus.chat:24705` -> `http://127.0.0.1:14705`
 - `https://local.blinqcampus.chat:24706` -> `http://127.0.0.1:14706`
 =======
+=======
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 - `https://local.revolt.chat:24701` -> `http://127.0.0.1:14701`
 - `https://local.revolt.chat:24702` -> `http://127.0.0.1:14702`
 - `https://local.revolt.chat:24703` -> `http://127.0.0.1:14703`
 - `https://local.revolt.chat:24704` -> `http://127.0.0.1:14704`
 - `https://local.revolt.chat:24705` -> `http://127.0.0.1:14705`
 - `https://local.revolt.chat:24706` -> `http://127.0.0.1:14706`
+<<<<<<< HEAD
+>>>>>>> e99df03359637127adadf91224df853828eb0569
+=======
 >>>>>>> e99df03359637127adadf91224df853828eb0569
 
 ## 4. Google OAuth values
 
 Google Cloud OAuth client:
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Authorized JavaScript origin: `https://local.blinqcampus.chat:24701`
 - Authorized redirect URI: `https://local.blinqcampus.chat:24702/auth/session/oauth/google/callback`
+=======
+- Authorized JavaScript origin: `https://local.revolt.chat:24701`
+- Authorized redirect URI: `https://local.revolt.chat:24702/auth/session/oauth/google/callback`
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
 - Authorized JavaScript origin: `https://local.revolt.chat:24701`
 - Authorized redirect URI: `https://local.revolt.chat:24702/auth/session/oauth/google/callback`
@@ -125,7 +148,11 @@ macOS / Linux:
 export GOOGLE_OAUTH_CLIENT_ID="..."
 export GOOGLE_OAUTH_CLIENT_SECRET="..."
 <<<<<<< HEAD
+<<<<<<< HEAD
 export GOOGLE_OAUTH_REDIRECT_URI="https://local.blinqcampus.chat:24702/auth/session/oauth/google/callback"
+=======
+export GOOGLE_OAUTH_REDIRECT_URI="https://local.revolt.chat:24702/auth/session/oauth/google/callback"
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
 export GOOGLE_OAUTH_REDIRECT_URI="https://local.revolt.chat:24702/auth/session/oauth/google/callback"
 >>>>>>> e99df03359637127adadf91224df853828eb0569
@@ -137,7 +164,11 @@ Windows (PowerShell):
 $env:GOOGLE_OAUTH_CLIENT_ID="..."
 $env:GOOGLE_OAUTH_CLIENT_SECRET="..."
 <<<<<<< HEAD
+<<<<<<< HEAD
 $env:GOOGLE_OAUTH_REDIRECT_URI="https://local.blinqcampus.chat:24702/auth/session/oauth/google/callback"
+=======
+$env:GOOGLE_OAUTH_REDIRECT_URI="https://local.revolt.chat:24702/auth/session/oauth/google/callback"
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
 $env:GOOGLE_OAUTH_REDIRECT_URI="https://local.revolt.chat:24702/auth/session/oauth/google/callback"
 >>>>>>> e99df03359637127adadf91224df853828eb0569

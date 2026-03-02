@@ -12,6 +12,7 @@ SERVICES=(
 )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 display_name_for_bin() {
   case "$1" in
     revolt-delta) echo "blinqcampus-api" ;;
@@ -26,6 +27,8 @@ display_name_for_bin() {
   esac
 }
 
+=======
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
 >>>>>>> e99df03359637127adadf91224df853828eb0569
 usage() {
@@ -154,7 +157,11 @@ fi
 
 for bin in "${SERVICES[@]}"; do
 <<<<<<< HEAD
+<<<<<<< HEAD
   echo "Starting $(display_name_for_bin "$bin") ($bin)"
+=======
+  echo "Starting $bin"
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
   echo "Starting $bin"
 >>>>>>> e99df03359637127adadf91224df853828eb0569

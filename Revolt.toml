@@ -19,17 +19,23 @@ host = "127.0.0.1"
 #
 # Remember to change these to https/wss where appropriate in production!
 <<<<<<< HEAD
+<<<<<<< HEAD
 app = "https://local.blinqcampus.chat:24701"
 api = "https://local.blinqcampus.chat:24702"
 events = "wss://local.blinqcampus.chat:24703"
 autumn = "https://local.blinqcampus.chat:24704"
 january = "https://local.blinqcampus.chat:24705"
 =======
+=======
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 app = "https://local.revolt.chat:24701"
 api = "https://local.revolt.chat:24702"
 events = "wss://local.revolt.chat:24703"
 autumn = "https://local.revolt.chat:24704"
 january = "https://local.revolt.chat:24705"
+<<<<<<< HEAD
+>>>>>>> e99df03359637127adadf91224df853828eb0569
+=======
 >>>>>>> e99df03359637127adadf91224df853828eb0569
 voso_legacy = ""
 voso_legacy_ws = ""
@@ -38,7 +44,11 @@ voso_legacy_ws = ""
 # each entry here should have a corresponding entry under `api.livekit.nodes`
 [hosts.livekit]
 <<<<<<< HEAD
+<<<<<<< HEAD
 worldwide = "wss://local.blinqcampus.chat:24706"
+=======
+worldwide = "wss://local.revolt.chat:24706"
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
 worldwide = "wss://local.revolt.chat:24706"
 >>>>>>> e99df03359637127adadf91224df853828eb0569

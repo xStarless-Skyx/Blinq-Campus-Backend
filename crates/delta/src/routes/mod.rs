@@ -235,7 +235,11 @@ fn custom_openapi_spec() -> OpenApi {
         servers: vec![
             Server {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 url: "https://local.blinqcampus.chat:24702".to_owned(),
+=======
+                url: "https://local.revolt.chat:24702".to_owned(),
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 =======
                 url: "https://local.revolt.chat:24702".to_owned(),
 >>>>>>> e99df03359637127adadf91224df853828eb0569

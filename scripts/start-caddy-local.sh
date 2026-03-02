@@ -14,15 +14,21 @@ if ! command -v caddy >/dev/null 2>&1; then
 fi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 if ! grep -Eq '(^|[[:space:]])local\.(blinqcampus|revolt)\.chat([[:space:]]|$)' /etc/hosts; then
   echo "Missing /etc/hosts entry for local.blinqcampus.chat."
   echo "Add this line:"
   echo "127.0.0.1 local.blinqcampus.chat"
 =======
+=======
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 if ! grep -Eq '(^|[[:space:]])local\.revolt\.chat([[:space:]]|$)' /etc/hosts; then
   echo "Missing /etc/hosts entry for local.revolt.chat."
   echo "Add this line:"
   echo "127.0.0.1 local.revolt.chat"
+<<<<<<< HEAD
+>>>>>>> e99df03359637127adadf91224df853828eb0569
+=======
 >>>>>>> e99df03359637127adadf91224df853828eb0569
   exit 1
 fi
