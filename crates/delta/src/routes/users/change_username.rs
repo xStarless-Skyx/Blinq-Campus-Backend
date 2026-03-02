@@ -36,6 +36,10 @@ pub async fn change_username(
     mut user: User,
     data: Json<DataChangeUsername>,
 ) -> Result<Json<v0::User>> {
+    if !user.privileged {
+        return Err(create_error!(InvalidOperation));
+    }
+
     let data = data.into_inner();
     data.validate().map_err(|error| {
         create_error!(FailedValidation {

@@ -126,8 +126,12 @@ impl State {
         // Fetch all memberships with their corresponding servers.
         let mut members: Vec<Member> = db.fetch_all_memberships(&user.id).await?;
 
-        let server_ids: Vec<String> = members.iter().map(|x| x.id.server.clone()).collect();
-        let servers = db.fetch_servers(&server_ids).await?;
+        let servers = if user.privileged {
+            db.fetch_all_servers().await?
+        } else {
+            let server_ids: Vec<String> = members.iter().map(|x| x.id.server.clone()).collect();
+            db.fetch_servers(&server_ids).await?
+        };
         self.cache.servers = servers.iter().cloned().map(|x| (x.id.clone(), x)).collect();
 
         // Collect channel ids from servers.
@@ -137,7 +141,11 @@ impl State {
         }
 
         // Fetch DMs and server channels.
-        let mut channels = db.find_direct_messages(&user.id).await?;
+        let mut channels = if user.privileged {
+            db.find_all_direct_messages().await?
+        } else {
+            db.find_direct_messages(&user.id).await?
+        };
         channels.append(&mut db.fetch_channels(&channel_ids).await?);
 
         // Filter server channels by permission.
@@ -192,7 +200,9 @@ impl State {
                 let user_ids = user_ids.into_iter().collect::<Vec<_>>();
                 let voice_members = db.fetch_members(&server, &user_ids).await?;
 
-                members.extend(voice_members);
+                if !user.privileged {
+                    members.extend(voice_members);
+                }
             }
 
             Some(voice_states)
@@ -314,7 +324,7 @@ impl State {
                 None
             },
             members: if fields.members {
-                Some(members.into_iter().map(Into::into).collect())
+                Some(members.iter().cloned().map(Into::into).collect())
             } else {
                 None
             },

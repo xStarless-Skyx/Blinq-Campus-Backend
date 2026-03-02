@@ -7412,8 +7412,6 @@ dependencies = [
 [[package]]
 name = "rocket_authifier"
 version = "1.0.16"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4a4e9660d198ea0165dc2694e7620d8fe199e923b39bec4d12b7159da5a4a6cd"
 dependencies = [
  "authifier",
  "iso8601-timestamp",

@@ -13,3 +13,4 @@ venv/
 
 livekit.yml
 .idea
+crates/delta/src/routes/oauth/google.rs

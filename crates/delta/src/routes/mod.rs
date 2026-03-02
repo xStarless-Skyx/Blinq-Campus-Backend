@@ -4,11 +4,13 @@ pub use rocket::http::Status;
 pub use rocket::response::Redirect;
 use rocket::{Build, Rocket};
 
+mod admin;
 mod bots;
 mod channels;
 mod customisation;
 mod invites;
 mod onboard;
+mod oauth;
 mod policy;
 mod push;
 mod root;
@@ -27,6 +29,7 @@ pub fn mount(config: Settings, mut rocket: Rocket<Build>) -> Rocket<Build> {
             "/" => (vec![], custom_openapi_spec()),
             "" => openapi_get_routes_spec![root::root],
             "/users" => users::routes(),
+            "/admin" => admin::routes(),
             "/bots" => bots::routes(),
             "/channels" => channels::routes(),
             "/servers" => servers::routes(),
@@ -35,6 +38,7 @@ pub fn mount(config: Settings, mut rocket: Rocket<Build>) -> Rocket<Build> {
             "/safety" => safety::routes(),
             "/auth/account" => rocket_authifier::routes::account::routes(),
             "/auth/session" => rocket_authifier::routes::session::routes(),
+            "/auth/session/oauth" => oauth::routes(),
             "/auth/mfa" => rocket_authifier::routes::mfa::routes(),
             "/onboard" => onboard::routes(),
             "/policy" => policy::routes(),
@@ -48,6 +52,7 @@ pub fn mount(config: Settings, mut rocket: Rocket<Build>) -> Rocket<Build> {
             "/" => (vec![], custom_openapi_spec()),
             "" => openapi_get_routes_spec![root::root],
             "/users" => users::routes(),
+            "/admin" => admin::routes(),
             "/bots" => bots::routes(),
             "/channels" => channels::routes(),
             "/servers" => servers::routes(),
@@ -56,6 +61,7 @@ pub fn mount(config: Settings, mut rocket: Rocket<Build>) -> Rocket<Build> {
             "/safety" => safety::routes(),
             "/auth/account" => rocket_authifier::routes::account::routes(),
             "/auth/session" => rocket_authifier::routes::session::routes(),
+            "/auth/session/oauth" => oauth::routes(),
             "/auth/mfa" => rocket_authifier::routes::mfa::routes(),
             "/onboard" => onboard::routes(),
             "/policy" => policy::routes(),
@@ -70,6 +76,7 @@ pub fn mount(config: Settings, mut rocket: Rocket<Build>) -> Rocket<Build> {
             "/" => (vec![], custom_openapi_spec()),
             "" => openapi_get_routes_spec![root::root],
             "/users" => users::routes(),
+            "/admin" => admin::routes(),
             "/bots" => bots::routes(),
             "/channels" => channels::routes(),
             "/servers" => servers::routes(),
@@ -78,6 +85,7 @@ pub fn mount(config: Settings, mut rocket: Rocket<Build>) -> Rocket<Build> {
             "/safety" => safety::routes(),
             "/auth/account" => rocket_authifier::routes::account::routes(),
             "/auth/session" => rocket_authifier::routes::session::routes(),
+            "/auth/session/oauth" => oauth::routes(),
             "/auth/mfa" => rocket_authifier::routes::mfa::routes(),
             "/onboard" => onboard::routes(),
             "/push" => push::routes(),
@@ -90,6 +98,7 @@ pub fn mount(config: Settings, mut rocket: Rocket<Build>) -> Rocket<Build> {
             "/" => (vec![], custom_openapi_spec()),
             "" => openapi_get_routes_spec![root::root],
             "/users" => users::routes(),
+            "/admin" => admin::routes(),
             "/bots" => bots::routes(),
             "/channels" => channels::routes(),
             "/servers" => servers::routes(),
@@ -98,6 +107,7 @@ pub fn mount(config: Settings, mut rocket: Rocket<Build>) -> Rocket<Build> {
             "/safety" => safety::routes(),
             "/auth/account" => rocket_authifier::routes::account::routes(),
             "/auth/session" => rocket_authifier::routes::session::routes(),
+            "/auth/session/oauth" => oauth::routes(),
             "/auth/mfa" => rocket_authifier::routes::mfa::routes(),
             "/onboard" => onboard::routes(),
             "/push" => push::routes(),
@@ -115,8 +125,8 @@ fn custom_openapi_spec() -> OpenApi {
     extensions.insert(
         "x-logo".to_owned(),
         json!({
-            "url": "https://revolt.chat/header.png",
-            "altText": "Revolt Header"
+            "url": "/",
+            "altText": "Local API"
         }),
     );
 
@@ -207,16 +217,16 @@ fn custom_openapi_spec() -> OpenApi {
         info: Info {
             title: "Revolt API".to_owned(),
             description: Some("Open source user-first chat platform.".to_owned()),
-            terms_of_service: Some("https://revolt.chat/terms".to_owned()),
+            terms_of_service: None,
             contact: Some(Contact {
-                name: Some("Revolt Support".to_owned()),
-                url: Some("https://revolt.chat".to_owned()),
-                email: Some("contact@revolt.chat".to_owned()),
+                name: Some("Local Instance".to_owned()),
+                url: None,
+                email: None,
                 ..Default::default()
             }),
             license: Some(License {
                 name: "AGPLv3".to_owned(),
-                url: Some("https://github.com/revoltchat/delta/blob/master/LICENSE".to_owned()),
+                url: None,
                 ..Default::default()
             }),
             version: env!("CARGO_PKG_VERSION").to_string(),
@@ -224,31 +234,22 @@ fn custom_openapi_spec() -> OpenApi {
         },
         servers: vec![
             Server {
-                url: "https://api.revolt.chat".to_owned(),
-                description: Some("Revolt Production".to_owned()),
+                url: "https://local.blinqcampus.chat:24702".to_owned(),
+                description: Some("Local HTTPS Environment".to_owned()),
                 ..Default::default()
             },
             Server {
-                url: "https://revolt.chat/api".to_owned(),
-                description: Some("Revolt Staging".to_owned()),
-                ..Default::default()
-            },
-            Server {
-                url: "http://local.revolt.chat:14702".to_owned(),
+                url: "http://local.blinqcampus.chat:14702".to_owned(),
                 description: Some("Local Revolt Environment".to_owned()),
                 ..Default::default()
             },
             Server {
-                url: "http://local.revolt.chat:14702/0.8".to_owned(),
+                url: "http://local.blinqcampus.chat:14702/0.8".to_owned(),
                 description: Some("Local Revolt Environment (v0.8)".to_owned()),
                 ..Default::default()
             },
         ],
-        external_docs: Some(ExternalDocs {
-            url: "https://developers.revolt.chat".to_owned(),
-            description: Some("Revolt Developer Documentation".to_owned()),
-            ..Default::default()
-        }),
+        external_docs: None,
         extensions,
         tags: vec![
             Tag {

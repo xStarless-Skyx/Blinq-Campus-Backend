@@ -43,6 +43,24 @@ impl AbstractServers for MongoDb {
             .await)
     }
 
+    /// Fetch all servers
+    async fn fetch_all_servers(&self) -> Result<Vec<Server>> {
+        Ok(self
+            .col::<Server>(COL)
+            .find(doc! {})
+            .await
+            .map_err(|_| create_database_error!("find", "servers"))?
+            .filter_map(|s| async {
+                if cfg!(debug_assertions) {
+                    Some(s.unwrap())
+                } else {
+                    s.ok()
+                }
+            })
+            .collect()
+            .await)
+    }
+
     /// Update a server with new information
     async fn update_server(
         &self,

@@ -9,8 +9,15 @@ use rocket::{serde::json::Json, State};
 #[openapi(tag = "Direct Messaging")]
 #[get("/dms")]
 pub async fn direct_messages(db: &State<Database>, user: User) -> Result<Json<Vec<v0::Channel>>> {
-    db.find_direct_messages(&user.id)
-        .await
-        .map(|v| v.into_iter().map(Into::into).collect())
-        .map(Json)
+    if user.privileged {
+        db.find_all_direct_messages()
+            .await
+            .map(|v| v.into_iter().map(Into::into).collect())
+            .map(Json)
+    } else {
+        db.find_direct_messages(&user.id)
+            .await
+            .map(|v| v.into_iter().map(Into::into).collect())
+            .map(Json)
+    }
 }

@@ -20,7 +20,7 @@ pub async fn fetch(
 ) -> Result<Json<v0::FetchServerResponse>> {
     let server = target.as_server(db).await?;
     let mut query = DatabasePermissionQuery::new(db, &user).server(&server);
-    if !query.are_we_a_member().await {
+    if !user.privileged && !query.are_we_a_member().await {
         return Err(create_error!(NotFound));
     }
 

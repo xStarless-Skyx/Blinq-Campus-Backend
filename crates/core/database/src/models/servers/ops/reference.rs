@@ -40,6 +40,12 @@ impl AbstractServers for ReferenceDb {
             .collect()
     }
 
+    /// Fetch all servers
+    async fn fetch_all_servers(&self) -> Result<Vec<Server>> {
+        let servers = self.servers.lock().await;
+        Ok(servers.values().cloned().collect())
+    }
+
     /// Update a server with new information
     async fn update_server(
         &self,

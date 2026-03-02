@@ -1,0 +1,36 @@
+{
+	# Local HTTPS certificates issued by Caddy's internal CA.
+	local_certs
+	# Avoid binding privileged port 80 for redirect handling in local dev.
+	auto_https disable_redirects
+}
+
+https://local.blinqcampus.chat:24701, https://local.revolt.chat:24701 {
+	bind 127.0.0.1
+	reverse_proxy [::1]:14701
+}
+
+https://local.blinqcampus.chat:24702, https://local.revolt.chat:24702 {
+	bind 127.0.0.1
+	reverse_proxy 127.0.0.1:14702
+}
+
+https://local.blinqcampus.chat:24703, https://local.revolt.chat:24703 {
+	bind 127.0.0.1
+	reverse_proxy 127.0.0.1:14703
+}
+
+https://local.blinqcampus.chat:24704, https://local.revolt.chat:24704 {
+	bind 127.0.0.1
+	reverse_proxy 127.0.0.1:14704
+}
+
+https://local.blinqcampus.chat:24705, https://local.revolt.chat:24705 {
+	bind 127.0.0.1
+	reverse_proxy 127.0.0.1:14705
+}
+
+https://local.blinqcampus.chat:24706, https://local.revolt.chat:24706 {
+	bind 127.0.0.1
+	reverse_proxy 127.0.0.1:14706
+}

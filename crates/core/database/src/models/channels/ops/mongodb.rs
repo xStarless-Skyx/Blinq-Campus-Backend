@@ -69,6 +69,20 @@ impl AbstractChannels for MongoDb {
         )
     }
 
+    /// Fetch all direct messages and group channels
+    async fn find_all_direct_messages(&self) -> Result<Vec<Channel>> {
+        query!(
+            self,
+            find,
+            COL,
+            doc! {
+                "channel_type": {
+                    "$in": ["DirectMessage", "Group"]
+                }
+            }
+        )
+    }
+
     // Fetch saved messages channel
     async fn find_saved_messages_channel(&self, user_id: &str) -> Result<Channel> {
         query!(

@@ -9,6 +9,7 @@ use revolt_permissions::{calculate_channel_permissions, ChannelPermission};
 use revolt_result::{create_error, Result};
 use rocket::{serde::json::Json, State};
 use validator::Validate;
+use crate::util::dm_audit;
 
 /// # Edit Message
 ///
@@ -46,6 +47,8 @@ pub async fn edit(
     if message.author != user.id {
         return Err(create_error!(CannotEditMessage));
     }
+
+    dm_audit::log_edit(db, &user.id, &channel, &message, edit.content.as_deref()).await?;
 
     message.edited = Some(Timestamp::now_utc());
     let mut partial = PartialMessage {

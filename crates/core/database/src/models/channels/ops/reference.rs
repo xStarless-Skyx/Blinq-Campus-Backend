@@ -51,6 +51,21 @@ impl AbstractChannels for ReferenceDb {
             .collect())
     }
 
+    /// Fetch all direct messages and group channels
+    async fn find_all_direct_messages(&self) -> Result<Vec<Channel>> {
+        let channels = self.channels.lock().await;
+        Ok(channels
+            .values()
+            .filter(|channel| {
+                matches!(
+                    channel,
+                    Channel::DirectMessage { .. } | Channel::Group { .. }
+                )
+            })
+            .cloned()
+            .collect())
+    }
+
     // Fetch saved messages channel
     async fn find_saved_messages_channel(&self, user_id: &str) -> Result<Channel> {
         let channels = self.channels.lock().await;

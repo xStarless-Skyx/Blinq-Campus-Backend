@@ -24,6 +24,12 @@ pub async fn edit(
         })
     })?;
 
+    if data.display_name.is_some() {
+        return Err(create_error!(FailedValidation {
+            error: "Display name updates are disabled on this instance.".to_string()
+        }));
+    }
+
     // Filter out invalid edit fields
     if !user.privileged && (data.badges.is_some() || data.flags.is_some()) {
         return Err(create_error!(NotPrivileged));
@@ -47,8 +53,7 @@ pub async fn edit(
     }
 
     // Exit out early if nothing is changed
-    if data.display_name.is_none()
-        && data.status.is_none()
+    if data.status.is_none()
         && data.profile.is_none()
         && data.avatar.is_none()
         && data.badges.is_none()
@@ -79,7 +84,6 @@ pub async fn edit(
     }
 
     let mut partial: PartialUser = PartialUser {
-        display_name: data.display_name,
         badges: data.badges,
         flags: data.flags,
         ..Default::default()

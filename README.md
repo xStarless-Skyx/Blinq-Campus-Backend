@@ -1,222 +1,157 @@
-<div align="center">
-<h1>
-  Stoat Backend
-  
-  [![Stars](https://img.shields.io/github/stars/revoltchat/backend?style=flat-square&logoColor=white)](https://github.com/revoltchat/backend/stargazers)
-  [![Forks](https://img.shields.io/github/forks/revoltchat/backend?style=flat-square&logoColor=white)](https://github.com/revoltchat/backend/network/members)
-  [![Pull Requests](https://img.shields.io/github/issues-pr/revoltchat/backend?style=flat-square&logoColor=white)](https://github.com/revoltchat/backend/pulls)
-  [![Issues](https://img.shields.io/github/issues/revoltchat/backend?style=flat-square&logoColor=white)](https://github.com/revoltchat/backend/issues)
-  [![Contributors](https://img.shields.io/github/contributors/revoltchat/backend?style=flat-square&logoColor=white)](https://github.com/revoltchat/backend/graphs/contributors)
-  [![License](https://img.shields.io/github/license/revoltchat/backend?style=flat-square&logoColor=white)](https://github.com/revoltchat/backend/blob/main/LICENSE)
-</h1>
-The services and libraries that power the Revolt service.<br/>
-<br/>
+# Blinq Campus Backend
 
-| Crate              | Path                                               | Description                         |                                                                                                                                                                                                                                                                                                           |
-| ------------------ | -------------------------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `core/config`      | [crates/core/config](crates/core/config)           | Core: Configuration                 | ![Crates.io Version](https://img.shields.io/crates/v/revolt-config) ![Crates.io Version](https://img.shields.io/crates/msrv/revolt-config) ![Crates.io Version](https://img.shields.io/crates/size/revolt-config) ![Crates.io License](https://img.shields.io/crates/l/revolt-config)                     |
-| `core/database`    | [crates/core/database](crates/core/database)       | Core: Database Implementation       | ![Crates.io Version](https://img.shields.io/crates/v/revolt-database) ![Crates.io Version](https://img.shields.io/crates/msrv/revolt-database) ![Crates.io Version](https://img.shields.io/crates/size/revolt-database) ![Crates.io License](https://img.shields.io/crates/l/revolt-database)             |
-| `core/files`       | [crates/core/files](crates/core/files)             | Core: S3 and encryption subroutines | ![Crates.io Version](https://img.shields.io/crates/v/revolt-files) ![Crates.io Version](https://img.shields.io/crates/msrv/revolt-files) ![Crates.io Version](https://img.shields.io/crates/size/revolt-files) ![Crates.io License](https://img.shields.io/crates/l/revolt-files)                         |
-| `core/models`      | [crates/core/models](crates/core/models)           | Core: API Models                    | ![Crates.io Version](https://img.shields.io/crates/v/revolt-models) ![Crates.io Version](https://img.shields.io/crates/msrv/revolt-models) ![Crates.io Version](https://img.shields.io/crates/size/revolt-models) ![Crates.io License](https://img.shields.io/crates/l/revolt-models)                     |
-| `core/permissions` | [crates/core/permissions](crates/core/permissions) | Core: Permission Logic              | ![Crates.io Version](https://img.shields.io/crates/v/revolt-permissions) ![Crates.io Version](https://img.shields.io/crates/msrv/revolt-permissions) ![Crates.io Version](https://img.shields.io/crates/size/revolt-permissions) ![Crates.io License](https://img.shields.io/crates/l/revolt-permissions) |
-| `core/presence`    | [crates/core/presence](crates/core/presence)       | Core: User Presence                 | ![Crates.io Version](https://img.shields.io/crates/v/revolt-presence) ![Crates.io Version](https://img.shields.io/crates/msrv/revolt-presence) ![Crates.io Version](https://img.shields.io/crates/size/revolt-presence) ![Crates.io License](https://img.shields.io/crates/l/revolt-presence)             |
-| `core/result`      | [crates/core/result](crates/core/result)           | Core: Result and Error types        | ![Crates.io Version](https://img.shields.io/crates/v/revolt-result) ![Crates.io Version](https://img.shields.io/crates/msrv/revolt-result) ![Crates.io Version](https://img.shields.io/crates/size/revolt-result) ![Crates.io License](https://img.shields.io/crates/l/revolt-result)                     |
-| `core/coalesced`   | [crates/core/coalesced](crates/core/coalesced)     | Core: Coalescion service            | ![Crates.io Version](https://img.shields.io/crates/v/revolt-coalesced) ![Crates.io Version](https://img.shields.io/crates/msrv/revolt-coalesced) ![Crates.io Version](https://img.shields.io/crates/size/revolt-coalesced) ![Crates.io License](https://img.shields.io/crates/l/revolt-coalesced)         |
-| `delta`            | [crates/delta](crates/delta)                       | REST API server                     | ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)                                                                                                                                                                                                                                |
-| `bonfire`          | [crates/bonfire](crates/bonfire)                   | WebSocket events server             | ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)                                                                                                                                                                                                                                |
-| `services/january` | [crates/services/january](crates/services/january) | Proxy server                        | ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)                                                                                                                                                                                                                                |
-| `services/gifbox`  | [crates/services/gifbox](crates/services/gifbox)   | Tenor proxy server                  | ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)                                                                                                                                                                                                                                |
-| `services/autumn`  | [crates/services/autumn](crates/services/autumn)   | File server                         | ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)                                                                                                                                                                                                                                |
-| `daemons/crond`    | [crates/daemons/crond](crates/daemons/crond)       | Timed data clean up daemon server   | ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)                                                                                                                                                                                                                                |
-| `daemons/pushd`    | [crates/daemons/pushd](crates/daemons/pushd)       | Push notification daemon server     | ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)                                                                                                                                                                                                                                |
+# Still in development, everything currently runs locally
 
-</div>
-<br/>
+Backend services for Blinq Campus (API, events, media, and proxy services).
 
-## Minimum Supported Rust Version
+This repository is a customized fork for local development and deployment. Some internal crate and binary names still use `revolt-*` for compatibility.
 
-Rust 1.86.0 or higher.
+## What This Runs
 
-## Development Guide
+Core local services:
+- `revolt-delta` (API) on `14702`
+- `revolt-bonfire` (events / websocket) on `14703`
+- `revolt-autumn` (files) on `14704`
+- `revolt-january` (metadata proxy) on `14705`
+- `revolt-gifbox` (gif/search proxy) on `14706`
 
-Before contributing, make yourself familiar with [our contribution guidelines](https://developers.revolt.chat/contrib.html) and the [technical documentation for this project](https://revoltchat.github.io/backend/).
+Docker dependencies:
+- MongoDB
+- Redis
+- RabbitMQ
+- MinIO
+- Maildev
+- LiveKit
 
-Before getting started, you'll want to install:
+## Prerequisites
 
-- mise
-- Docker
-- Git
-- mold (optional, faster compilation)
+- Rust toolchain (`cargo`, `rustc`)
+- Docker Desktop (running)
+- `docker compose`
 
-> A **default.nix** is available for Nix users!
-> Run `nix-shell` to activate mise.
+Optional but recommended:
+- `mise` (if you use the project toolchain bootstrap)
 
-As a heads-up, the development environment uses the following ports:
+## Quick Start (Backend Only)
 
-| Service                   |      Port      |
-| ------------------------- | :------------: |
-| MongoDB                   |     27017      |
-| Redis                     |      6379      |
-| MinIO                     |     14009      |
-| Maildev                   | 14025<br>14080 |
-| Revolt Web App            |     14701      |
-| RabbitMQ                  | 5672<br>15672  |
-| `crates/delta`            |     14702      |
-| `crates/bonfire`          |     14703      |
-| `crates/services/autumn`  |     14704      |
-| `crates/services/january` |     14705      |
-| `crates/services/gifbox`  |     14706      |
-
-Now you can clone and build the project:
+From the repo root:
 
 ```bash
-git clone https://github.com/revoltchat/backend revolt-backend
-cd revolt-backend
-mise build
-```
-
-A default configuration `Revolt.toml` is present in this project that is suited for development.
-
-If you'd like to change anything, create a `Revolt.overrides.toml` file and specify relevant variables.
-
-> [!TIP]
-> Use Sentry to catch unexpected service errors:
->
-> ```toml
-> # Revolt.overrides.toml
-> [sentry]
-> api = "https://abc@your.sentry/1"
-> events = "https://abc@your.sentry/1"
-> files = "https://abc@your.sentry/1"
-> proxy = "https://abc@your.sentry/1"
-> ```
-
-> [!TIP]
-> If you have port conflicts on common services, you can try the following:
->
-> ```yaml
-> # compose.override.yml
-> services:
->   redis:
->     ports: !override
->       - "14079:6379"
->
->   database:
->     ports: !override
->       - "14017:27017"
->
->   rabbit:
->     ports: !override
->       - "14072:5672"
->       - "14672:15672"
-> ```
->
-> And corresponding Revolt configuration:
->
-> ```toml
-> #     Revolt.overrides.toml
-> # and Revolt.test-overrides.toml
-> [database]
-> mongodb = "mongodb://127.0.0.1:14017"
-> redis = "redis://127.0.0.1:14079/"
->
-> [rabbit]
-> port = 14072
-> ```
-
-Then continue:
-
-```bash
-# start other necessary services
 docker compose up -d
-
-# run everything together
 ./scripts/start.sh
-# .. or individually
-# run the API server
-cargo run --bin revolt-delta
-# run the events server
-cargo run --bin revolt-bonfire
-# run the file server
-cargo run --bin revolt-autumn
-# run the proxy server
-cargo run --bin revolt-january
-# run the tenor proxy
-cargo run --bin revolt-gifbox
-# run the push daemon (not usually needed in regular development)
-cargo run --bin revolt-pushd
-
-# hint:
-# mold -run <cargo build, cargo run, etc...>
-# mold -run ./scripts/start.sh
 ```
 
-You can start a web client by doing the following:
+Expected startup lines include:
+- `Starting blinqcampus-api (revolt-delta)`
+- `Starting blinqcampus-events (revolt-bonfire)`
+- `Starting blinqcampus-files (revolt-autumn)`
+- `Starting blinqcampus-metadata (revolt-january)`
+- `Starting blinqcampus-gifbox (revolt-gifbox)`
+
+## Verify It Is Running
 
 ```bash
-# if you do not have yarn yet and have a modern Node.js:
-corepack enable
-
-# clone the web client and run it:
-git clone --recursive https://github.com/revoltchat/revite
-cd revite
-yarn
-yarn build:deps
-echo "VITE_API_URL=http://local.revolt.chat:14702" > .env.local
-yarn dev --port 14701
+docker compose ps
+lsof -nP -iTCP:14702 -sTCP:LISTEN
+lsof -nP -iTCP:14703 -sTCP:LISTEN
 ```
 
-Then go to http://local.revolt.chat:14701 to create an account/login.
+Health checks:
+- API: `http://localhost:14702`
+- Events WS: `ws://localhost:14703`
 
-When signing up, go to http://localhost:14080 to find confirmation/password reset emails.
+## Stop Services
 
-## Deployment Guide
-
-### Cutting new crate releases
-
-Begin by bumping crate versions:
+Stop Rust services started by `start.sh`:
 
 ```bash
-just patch # 0.0.X
-just minor # 0.X.0
-just major # X.0.0
+pkill -f 'target/debug/revolt-'
 ```
 
-Then commit the changes to package files.
-
-Proceed to publish all the new crates:
+Stop Docker dependencies:
 
 ```bash
-just publish
+docker compose down
 ```
 
-### Cutting new binary releases
+## HTTPS Local Development (OAuth-Compatible)
 
-Tag and push a new release by running:
+For Google OAuth and secure-cookie flows, use HTTPS local endpoints via reverse proxy:
+- `https://local.blinqcampus.chat:24701` -> web
+- `https://local.blinqcampus.chat:24702` -> API
+- `https://local.blinqcampus.chat:24703` -> events
+
+Use the helper docs and scripts in `docs/local-https.md` and `scripts/start-caddy-local.*`.
+
+## Common Issues
+
+### Docker daemon not running
+
+If you see:
+`Cannot connect to the Docker daemon ... Is the docker daemon running?`
+
+Start Docker Desktop, then run:
 
 ```bash
-just release
+docker compose up -d
 ```
 
-If you have bumped the crate versions, proceed to [GitHub releases](https://github.com/revoltchat/backend/releases/new) to create a changelog.
+### Address already in use
 
-## Testing
+If startup fails with `AddrInUse` on one of the backend ports:
 
-First, start the required services:
-
-```sh
-docker compose -f docker-compose.db.yml up -d
+```bash
+lsof -nP -iTCP:14702 -sTCP:LISTEN
+lsof -nP -iTCP:14703 -sTCP:LISTEN
+pkill -f 'target/debug/revolt-'
 ```
 
-Now run tests for whichever database:
+Then restart with `./scripts/start.sh`.
 
-```sh
-TEST_DB=REFERENCE cargo nextest run
-TEST_DB=MONGODB cargo nextest run
+### Websocket 502 through reverse proxy
+
+If Caddy logs show `connect: connection refused` for `14703`, `revolt-bonfire` is not running.
+
+Start services again:
+
+```bash
+./scripts/start.sh
 ```
 
-## License
+### Cargo lock/build lock waits
 
-The Revolt backend is generally licensed under the [GNU Affero General Public License v3.0](https://github.com/revoltchat/backend/blob/master/LICENSE).
+`Blocking waiting for file lock` means another cargo process is active.
 
-**Individual crates may supply their own licenses!**
+Check and stop old processes:
+
+```bash
+ps aux | rg cargo
+pkill -f cargo
+```
+
+Then restart.
+
+## OAuth Notes (Current Local Setup)
+
+This fork uses local OAuth callback handling in backend route code and local HTTPS endpoints.
+
+If OAuth fails, check:
+1. Backend is running from this repo copy.
+2. Google OAuth app has exact redirect URI configured.
+3. Local HTTPS host/ports match your runtime (`24701`/`24702`).
+
+## Repository Layout
+
+- `crates/delta` - API service
+- `crates/bonfire` - events/websocket service
+- `crates/services/autumn` - file service
+- `crates/services/january` - metadata/embed service
+- `crates/services/gifbox` - gif/search proxy
+- `scripts/start.sh` - run all backend services together
+- `compose.yml` - local dependency stack
+- `Revolt.toml` - runtime config
+
+## Development Notes
+
+- This repository may contain active customizations for Blinq Campus policy and admin tooling.
+- Keep route names and internal types stable unless frontend and SDK consumers are updated in lockstep.
