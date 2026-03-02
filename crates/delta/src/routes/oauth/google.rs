@@ -14,9 +14,8 @@ const GOOGLE_AUTH_URL: &str = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_URL: &str = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL: &str = "https://openidconnect.googleapis.com/v1/userinfo";
 const OAUTH_STATE_COOKIE: &str = "oauth_google_state";
-const GOOGLE_OAUTH_CLIENT_ID_FALLBACK: &str =
-    "926968439906-dcnt27a3mmet9gb345vj1m9okcr72j4o.apps.googleusercontent.com";
-const GOOGLE_OAUTH_CLIENT_SECRET_FALLBACK: &str = "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";
+// const GOOGLE_OAUTH_CLIENT_ID FALLBACK:
+// const GOOGLE_OAUTH_CLIENT_SECRET FALLBACK: &str = 
 const GOOGLE_OAUTH_REDIRECT_URI_FALLBACK: &str =
     "https://local.blinqcampus.chat:24702/auth/session/oauth/google/callback";
 const GOOGLE_OAUTH_APP_REDIRECT_URI_FALLBACK: &str = "https://local.blinqcampus.chat:24701/";
