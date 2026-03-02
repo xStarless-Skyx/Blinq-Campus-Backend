@@ -5,32 +5,56 @@
 	auto_https disable_redirects
 }
 
+<<<<<<< HEAD
 https://local.blinqcampus.chat:24701, https://local.revolt.chat:24701 {
+=======
+https://local.revolt.chat:24701 {
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 	bind 127.0.0.1
 	reverse_proxy [::1]:14701
 }
 
+<<<<<<< HEAD
 https://local.blinqcampus.chat:24702, https://local.revolt.chat:24702 {
+=======
+https://local.revolt.chat:24702 {
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 	bind 127.0.0.1
 	reverse_proxy 127.0.0.1:14702
 }
 
+<<<<<<< HEAD
 https://local.blinqcampus.chat:24703, https://local.revolt.chat:24703 {
+=======
+https://local.revolt.chat:24703 {
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 	bind 127.0.0.1
 	reverse_proxy 127.0.0.1:14703
 }
 
+<<<<<<< HEAD
 https://local.blinqcampus.chat:24704, https://local.revolt.chat:24704 {
+=======
+https://local.revolt.chat:24704 {
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 	bind 127.0.0.1
 	reverse_proxy 127.0.0.1:14704
 }
 
+<<<<<<< HEAD
 https://local.blinqcampus.chat:24705, https://local.revolt.chat:24705 {
+=======
+https://local.revolt.chat:24705 {
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 	bind 127.0.0.1
 	reverse_proxy 127.0.0.1:14705
 }
 
+<<<<<<< HEAD
 https://local.blinqcampus.chat:24706, https://local.revolt.chat:24706 {
+=======
+https://local.revolt.chat:24706 {
+>>>>>>> e99df03359637127adadf91224df853828eb0569
 	bind 127.0.0.1
 	reverse_proxy 127.0.0.1:14706
 }
