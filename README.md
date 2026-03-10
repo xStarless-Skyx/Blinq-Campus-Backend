@@ -42,25 +42,12 @@ docker compose up -d
 ```
 
 Expected startup lines include:
-<<<<<<< HEAD
-<<<<<<< HEAD
 - `Starting blinqcampus-api (revolt-delta)`
 - `Starting blinqcampus-events (revolt-bonfire)`
 - `Starting blinqcampus-files (revolt-autumn)`
 - `Starting blinqcampus-metadata (revolt-january)`
 - `Starting blinqcampus-gifbox (revolt-gifbox)`
-=======
-=======
->>>>>>> e99df03359637127adadf91224df853828eb0569
-- `Starting revolt-delta`
-- `Starting revolt-bonfire`
-- `Starting revolt-autumn`
-- `Starting revolt-january`
-- `Starting revolt-gifbox`
-<<<<<<< HEAD
->>>>>>> e99df03359637127adadf91224df853828eb0569
-=======
->>>>>>> e99df03359637127adadf91224df853828eb0569
+
 
 ## Verify It Is Running
 
@@ -91,21 +78,10 @@ docker compose down
 ## HTTPS Local Development (OAuth-Compatible)
 
 For Google OAuth and secure-cookie flows, use HTTPS local endpoints via reverse proxy:
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 - `https://local.blinqcampus.chat:24701` -> web
 - `https://local.blinqcampus.chat:24702` -> API
 - `https://local.blinqcampus.chat:24703` -> events
-=======
-- `https://local.revolt.chat:24701` -> web
-- `https://local.revolt.chat:24702` -> API
-- `https://local.revolt.chat:24703` -> events
->>>>>>> e99df03359637127adadf91224df853828eb0569
-=======
-- `https://local.revolt.chat:24701` -> web
-- `https://local.revolt.chat:24702` -> API
-- `https://local.revolt.chat:24703` -> events
->>>>>>> e99df03359637127adadf91224df853828eb0569
 
 Use the helper docs and scripts in `docs/local-https.md` and `scripts/start-caddy-local.*`.
 
@@ -147,8 +123,6 @@ Start services again:
 ### Cargo lock/build lock waits
 
 `Blocking waiting for file lock` means another cargo process is active.
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 Check and stop old processes:
 
@@ -183,77 +157,3 @@ If OAuth fails, check:
 
 - This repository may contain active customizations for Blinq Campus policy and admin tooling.
 - Keep route names and internal types stable unless frontend and SDK consumers are updated in lockstep.
-=======
-
-Check and stop old processes:
-
-```bash
-ps aux | rg cargo
-pkill -f cargo
-```
-
-Then restart.
-
-## OAuth Notes (Current Local Setup)
-
-This fork uses local OAuth callback handling in backend route code and local HTTPS endpoints.
-
-If OAuth fails, check:
-1. Backend is running from this repo copy.
-2. Google OAuth app has exact redirect URI configured.
-3. Local HTTPS host/ports match your runtime (`24701`/`24702`).
-
-## Repository Layout
-
-- `crates/delta` - API service
-- `crates/bonfire` - events/websocket service
-- `crates/services/autumn` - file service
-- `crates/services/january` - metadata/embed service
-- `crates/services/gifbox` - gif/search proxy
-- `scripts/start.sh` - run all backend services together
-- `compose.yml` - local dependency stack
-- `Revolt.toml` - runtime config
-
-## Development Notes
-
-- This repository may contain active customizations for Blinq Campus policy and admin tooling.
-- Keep route names and internal types stable unless frontend and SDK consumers are updated in lockstep.
-
->>>>>>> e99df03359637127adadf91224df853828eb0569
-=======
-
-Check and stop old processes:
-
-```bash
-ps aux | rg cargo
-pkill -f cargo
-```
-
-Then restart.
-
-## OAuth Notes (Current Local Setup)
-
-This fork uses local OAuth callback handling in backend route code and local HTTPS endpoints.
-
-If OAuth fails, check:
-1. Backend is running from this repo copy.
-2. Google OAuth app has exact redirect URI configured.
-3. Local HTTPS host/ports match your runtime (`24701`/`24702`).
-
-## Repository Layout
-
-- `crates/delta` - API service
-- `crates/bonfire` - events/websocket service
-- `crates/services/autumn` - file service
-- `crates/services/january` - metadata/embed service
-- `crates/services/gifbox` - gif/search proxy
-- `scripts/start.sh` - run all backend services together
-- `compose.yml` - local dependency stack
-- `Revolt.toml` - runtime config
-
-## Development Notes
-
-- This repository may contain active customizations for Blinq Campus policy and admin tooling.
-- Keep route names and internal types stable unless frontend and SDK consumers are updated in lockstep.
-
->>>>>>> e99df03359637127adadf91224df853828eb0569
