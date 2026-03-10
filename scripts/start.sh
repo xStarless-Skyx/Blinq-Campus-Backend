@@ -2,6 +2,16 @@
 
 set -euo pipefail
 
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# Load optional local env overrides for OAuth, etc.
+if [ -f "$ROOT_DIR/.env.local" ]; then
+  set -a
+  # shellcheck disable=SC1090
+  . "$ROOT_DIR/.env.local"
+  set +a
+fi
+
 # Core services typically needed for local development.
 SERVICES=(
   revolt-delta
@@ -11,8 +21,6 @@ SERVICES=(
   revolt-gifbox
 )
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 display_name_for_bin() {
   case "$1" in
     revolt-delta) echo "blinqcampus-api" ;;
@@ -26,11 +34,6 @@ display_name_for_bin() {
     *) echo "$1" ;;
   esac
 }
-
-=======
->>>>>>> e99df03359637127adadf91224df853828eb0569
-=======
->>>>>>> e99df03359637127adadf91224df853828eb0569
 usage() {
   cat <<'USAGE'
 Usage: ./scripts/start.sh [options]
@@ -156,15 +159,7 @@ if [ "$skip_build" -eq 0 ]; then
 fi
 
 for bin in "${SERVICES[@]}"; do
-<<<<<<< HEAD
-<<<<<<< HEAD
   echo "Starting $(display_name_for_bin "$bin") ($bin)"
-=======
-  echo "Starting $bin"
->>>>>>> e99df03359637127adadf91224df853828eb0569
-=======
-  echo "Starting $bin"
->>>>>>> e99df03359637127adadf91224df853828eb0569
   "target/debug/$bin" &
   pids+=("$!")
 done

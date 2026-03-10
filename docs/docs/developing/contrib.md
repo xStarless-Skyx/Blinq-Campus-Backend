@@ -36,10 +36,4 @@ Also typically `help wanted` labels are available on repo issues!
 
 Any issues marked with "Future Work" or with a milestone greater than the current milestone are out of bounds and should not be worked on since it's likely that the team already has a plan in place, any work you may do may conflict with prior ideas, and your work may potentially be rejected if it does fit the criteria exactly. In general, these issues are just postponed to reduce long term technical debt, i.e. allow current issues to be handled. -->
 
-## Project Guidance
 
-Please read the additional relevant guidance on:
-
-- [Developing for Backend](https://github.com/stoatchat/backend?tab=readme-ov-file#development-guide) (contrib guide TBA)
-- [Contributing to Frontend](https://stoatchat.github.io/for-web/contribution-guide.html)
-- [Contributing to Android](https://stoatchat.github.io/for-android/contributing/guidelines/)
