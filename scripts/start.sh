@@ -41,6 +41,8 @@ Usage: ./scripts/start.sh [options]
 Builds selected backend binaries once, then starts them in parallel.
 
 Options:
+  --no-caddy           Do not start local Caddy reverse proxy
+  --no-docs            Do not start docs site (npm)
   --with-pushd          Also start revolt-pushd
   --with-crond          Also start revolt-crond
   --with-voice-ingress  Also start revolt-voice-ingress
@@ -50,9 +52,17 @@ USAGE
 }
 
 skip_build=0
+start_caddy=1
+start_docs=1
 
 for arg in "$@"; do
   case "$arg" in
+    --no-caddy)
+      start_caddy=0
+      ;;
+    --no-docs)
+      start_docs=0
+      ;;
     --with-pushd)
       SERVICES+=(revolt-pushd)
       ;;
@@ -142,12 +152,41 @@ for bin in "${SERVICES[@]}"; do
   fi
 done
 
+if [ "$start_docs" -eq 1 ]; then
+  if lsof -nP -iTCP:14701 -sTCP:LISTEN >/dev/null 2>&1; then
+    echo "Port 14701 is already in use; leaving existing frontend/docs running."
+    start_docs=0
+  fi
+fi
+
 wait_for_port "127.0.0.1" "27017" "MongoDB"
 wait_for_port "127.0.0.1" "6379" "Redis"
 wait_for_port "127.0.0.1" "5672" "RabbitMQ"
 wait_for_port "127.0.0.1" "14009" "MinIO"
 # Give RabbitMQ a brief grace period after socket open.
 sleep 2
+
+if [ "$start_caddy" -eq 1 ]; then
+  echo "Starting Caddy..."
+  "$ROOT_DIR/scripts/start-caddy-local.sh" &
+  pids+=("$!")
+fi
+
+if [ "$start_docs" -eq 1 ]; then
+  if ! command -v npm >/dev/null 2>&1; then
+    echo "npm is not installed. Start with --no-docs or install Node.js." >&2
+    exit 1
+  fi
+
+  if [ ! -d "$ROOT_DIR/docs/node_modules" ]; then
+    echo "Installing docs dependencies..."
+    (cd "$ROOT_DIR/docs" && npm install)
+  fi
+
+  echo "Starting docs site (npm)..."
+  (cd "$ROOT_DIR/docs" && npm run start -- --port 14701) &
+  pids+=("$!")
+fi
 
 if [ "$skip_build" -eq 0 ]; then
   echo "Building binaries..."

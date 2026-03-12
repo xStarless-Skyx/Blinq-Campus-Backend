@@ -137,7 +137,7 @@ impl TestHarness {
     pub async fn new_role(
         &self,
         server: &Server,
-        rank: i64,
+        _rank: i64,
         overrides: Option<OverrideField>,
     ) -> Role {
         let mut role = Role::create(&self.db, &server, TestHarness::rand_string())

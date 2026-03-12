@@ -53,16 +53,16 @@ auto_derived_partial!(
     "PartialMember"
 );
 
-auto_derived!(
-    /// Composite primary key consisting of server and user id
-    #[derive(Hash, Default)]
-    pub struct MemberCompositeKey {
-        /// Server Id
-        pub server: String,
-        /// User Id
-        pub user: String,
-    }
+/// Composite primary key consisting of server and user id
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Hash, Default)]
+pub struct MemberCompositeKey {
+    /// Server Id
+    pub server: String,
+    /// User Id
+    pub user: String,
+}
 
+auto_derived!(
     /// Optional fields on server member object
     pub enum FieldsMember {
         Nickname,

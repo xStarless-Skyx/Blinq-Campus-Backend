@@ -11,7 +11,8 @@ use validator::Validate;
 ///
 /// Block zero width space
 /// Block lookalike characters
-pub static RE_USERNAME: Lazy<Regex> = Lazy::new(|| Regex::new(r"^(\p{L}|[\d_.-])+$").unwrap());
+pub static RE_USERNAME: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"^(\p{L}|[\d_.@+-])+$").unwrap());
 
 /// Regex for valid display names
 ///

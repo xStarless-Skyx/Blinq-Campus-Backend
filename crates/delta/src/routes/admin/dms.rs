@@ -1,11 +1,11 @@
 use revolt_database::{
-    Channel, Database, MessageFilter, MessageQuery, MessageTimePeriod, User,
+    Channel, Database, Message, MessageFilter, MessageQuery, MessageTimePeriod, User,
 };
-use revolt_models::v0::MessageSort;
-use revolt_models::v0;
+use revolt_models::v0::{self, MessageSort};
 use revolt_result::{create_error, Result};
 use rocket::{form::FromForm, serde::json::Json, State};
 use serde::Serialize;
+use validator::Validate;
 
 #[derive(FromForm, JsonSchema)]
 pub struct DmSummaryQuery {
@@ -18,8 +18,10 @@ pub struct DmSummary {
     channel_id: String,
     user_a_id: String,
     user_a_name: String,
+    user_a_avatar: Option<v0::File>,
     user_b_id: String,
     user_b_name: String,
+    user_b_avatar: Option<v0::File>,
     last_message_id: Option<String>,
     last_message_preview: Option<String>,
 }
@@ -161,8 +163,10 @@ pub async fn list_dm_summaries(
             channel_id,
             user_a_id: user_a.id.clone(),
             user_a_name: user_a.display_name.clone().unwrap_or(user_a.username.clone()),
+            user_a_avatar: user_a.avatar.clone().map(Into::into),
             user_b_id: user_b.id.clone(),
             user_b_name: user_b.display_name.clone().unwrap_or(user_b.username.clone()),
+            user_b_avatar: user_b.avatar.clone().map(Into::into),
             last_message_id: latest_message.as_ref().map(|m| m.id.clone()),
             last_message_preview: latest_message
                 .and_then(|m| m.content)
@@ -174,4 +178,70 @@ pub async fn list_dm_summaries(
     summaries.truncate(limit);
 
     Ok(Json(summaries))
+}
+
+/// # Fetch DM Messages (Admin)
+///
+/// Fetch messages from a DM channel as an admin.
+#[openapi(tag = "Admin")]
+#[get("/dms/<channel_id>/messages?<options..>")]
+pub async fn dm_messages(
+    db: &State<Database>,
+    user: User,
+    channel_id: String,
+    options: v0::OptionsQueryMessages,
+) -> Result<Json<v0::BulkMessageResponse>> {
+    if !user.privileged {
+        return Err(create_error!(NotPrivileged));
+    }
+
+    options.validate().map_err(|error| {
+        create_error!(FailedValidation {
+            error: error.to_string()
+        })
+    })?;
+
+    if let Some(MessageSort::Relevance) = options.sort {
+        return Err(create_error!(InvalidOperation));
+    }
+
+    let channel = db.fetch_channel(&channel_id).await?;
+    match channel {
+        Channel::DirectMessage { .. } => {}
+        _ => return Err(create_error!(InvalidOperation)),
+    }
+
+    let v0::OptionsQueryMessages {
+        limit,
+        before,
+        after,
+        sort,
+        nearby,
+        include_users,
+    } = options;
+
+    Message::fetch_with_users(
+        db,
+        MessageQuery {
+            filter: MessageFilter {
+                channel: Some(channel_id),
+                ..Default::default()
+            },
+            time_period: if let Some(nearby) = nearby {
+                MessageTimePeriod::Relative { nearby }
+            } else {
+                MessageTimePeriod::Absolute {
+                    before,
+                    after,
+                    sort,
+                }
+            },
+            limit,
+        },
+        &user,
+        include_users.or(Some(true)),
+        None,
+    )
+    .await
+    .map(Json)
 }

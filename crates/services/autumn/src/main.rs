@@ -17,6 +17,7 @@ pub mod clamav;
 pub mod exif;
 pub mod metadata;
 pub mod mime_type;
+mod moderation;
 mod ratelimits;
 
 #[derive(FromRef, Clone)]

@@ -359,6 +359,30 @@ impl From<EmojiParent> for crate::EmojiParent {
     }
 }
 
+impl From<crate::ImageModeration> for ImageModeration {
+    fn from(value: crate::ImageModeration) -> Self {
+        ImageModeration {
+            nsfw: value.nsfw,
+            nsfw_label: value.nsfw_label,
+            nsfw_score: value.nsfw_score,
+            profanity: value.profanity,
+            profanity_matches: value.profanity_matches,
+        }
+    }
+}
+
+impl From<ImageModeration> for crate::ImageModeration {
+    fn from(value: ImageModeration) -> crate::ImageModeration {
+        crate::ImageModeration {
+            nsfw: value.nsfw,
+            nsfw_label: value.nsfw_label,
+            nsfw_score: value.nsfw_score,
+            profanity: value.profanity,
+            profanity_matches: value.profanity_matches,
+        }
+    }
+}
+
 impl From<crate::File> for File {
     fn from(value: crate::File) -> Self {
         File {
@@ -368,6 +392,7 @@ impl From<crate::File> for File {
             metadata: value.metadata.into(),
             content_type: value.content_type,
             size: value.size,
+            image_moderation: value.image_moderation.map(Into::into),
             deleted: value.deleted,
             reported: value.reported,
             message_id: value.message_id,
@@ -387,6 +412,7 @@ impl From<File> for crate::File {
             metadata: value.metadata.into(),
             content_type: value.content_type,
             size: value.size,
+            image_moderation: value.image_moderation.map(Into::into),
             deleted: value.deleted,
             reported: value.reported,
             message_id: value.message_id,

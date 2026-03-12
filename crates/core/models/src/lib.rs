@@ -23,7 +23,7 @@ macro_rules! auto_derived {
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
             #[cfg_attr(feature = "schemas", derive(JsonSchema))]
             #[cfg_attr(feature = "utoipa", derive(ToSchema))]
-            #[derive(Debug, Clone, Eq, PartialEq)]
+            #[derive(Debug, Clone, PartialEq)]
             $item
         )+
     };
@@ -33,12 +33,11 @@ macro_rules! auto_derived {
 macro_rules! auto_derived_partial {
     ( $item:item, $name:expr ) => {
         #[derive(
-            OptionalStruct, Debug, Clone, Eq, PartialEq, Serialize, Deserialize, JsonSchema,
+            OptionalStruct, Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema,
         )]
         #[optional_derive(
             Debug,
             Clone,
-            Eq,
             PartialEq,
             Serialize,
             Deserialize,
@@ -55,7 +54,7 @@ macro_rules! auto_derived_partial {
 #[cfg(not(feature = "partials"))]
 macro_rules! auto_derived_partial {
     ( $item:item, $name:expr ) => {
-        #[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, JsonSchema)]
+        #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
         $item
     };
 }

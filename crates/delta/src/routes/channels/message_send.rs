@@ -11,6 +11,8 @@ use revolt_result::{create_error, Result};
 use rocket::serde::json::Json;
 use rocket::State;
 use validator::Validate;
+use crate::util::auto_report;
+use crate::util::content_filter::{classify_language, LanguageFilterResult};
 
 /// # Send Message
 ///
@@ -31,6 +33,19 @@ pub async fn message_send(
             error: error.to_string()
         })
     })?;
+
+    if let Some(content) = data.content.as_deref() {
+        match classify_language(content) {
+            LanguageFilterResult::Allow => {}
+            LanguageFilterResult::Block => {
+                return Err(create_error!(MessageBlockedLanguage));
+            }
+            LanguageFilterResult::BlockAndReport { matches } => {
+                auto_report::report_blocked_language(db, &user, content, &matches).await;
+                return Err(create_error!(MessageBlockedLanguage));
+            }
+        }
+    }
 
     // Ensure we have permissions to send a message
     let channel = target.as_channel(db).await?;

@@ -10,6 +10,8 @@ use revolt_result::{create_error, Result};
 use rocket::{serde::json::Json, State};
 use validator::Validate;
 use crate::util::dm_audit;
+use crate::util::auto_report;
+use crate::util::content_filter::{classify_language, LanguageFilterResult};
 
 /// # Edit Message
 ///
@@ -35,6 +37,19 @@ pub async fn edit(
         edit.embeds.as_deref().unwrap_or_default(),
         user.limits().await.message_length,
     )?;
+
+    if let Some(content) = edit.content.as_deref() {
+        match classify_language(content) {
+            LanguageFilterResult::Allow => {}
+            LanguageFilterResult::Block => {
+                return Err(create_error!(MessageBlockedLanguage));
+            }
+            LanguageFilterResult::BlockAndReport { matches } => {
+                auto_report::report_blocked_language(db, &user, content, &matches).await;
+                return Err(create_error!(MessageBlockedLanguage));
+            }
+        }
+    }
 
     // Ensure we have permissions to send a message
     let channel = target.as_channel(db).await?;

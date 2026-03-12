@@ -3,6 +3,21 @@ use crate::{Database, FileHash, Metadata};
 use iso8601_timestamp::Timestamp;
 use revolt_result::Result;
 
+/// Image moderation results
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+pub struct ImageModeration {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nsfw: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nsfw_label: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nsfw_score: Option<f32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub profanity: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub profanity_matches: Option<Vec<String>>,
+}
+
 auto_derived_partial!(
     /// File
     pub struct File {
@@ -40,6 +55,10 @@ auto_derived_partial!(
         pub content_type: String,
         /// Size of this file (in bytes)
         pub size: isize,
+
+        /// Image moderation results (if applicable)
+        #[serde(skip_serializing_if = "Option::is_none")]
+        pub image_moderation: Option<ImageModeration>,
 
         // TODO: migrate this mess to having:
         // - author_id

@@ -17,7 +17,7 @@ use super::DelayedTask;
 use crate::Channel::TextChannel;
 
 /// Enumeration of possible events
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub enum AckEvent {
     /// Add mentions for a channel
     ProcessMessage {

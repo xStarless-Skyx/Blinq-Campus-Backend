@@ -25,7 +25,13 @@ use tokio::time::Instant;
 use tower_http::cors::{AllowHeaders, Any, CorsLayer};
 use utoipa::ToSchema;
 
-use crate::{exif::strip_metadata, metadata::generate_metadata, mime_type::determine_mime_type, AppState};
+use crate::{
+    exif::strip_metadata,
+    metadata::generate_metadata,
+    mime_type::determine_mime_type,
+    moderation,
+    AppState,
+};
 
 /// Build the API router
 pub async fn router() -> Router<AppState> {
@@ -269,6 +275,13 @@ async fn upload_file(
     // Strip metadata
     let (buf, metadata) = strip_metadata(file.contents, buf, metadata, mime_type).await?;
 
+    // Optional image moderation
+    let image_moderation = if matches!(metadata, Metadata::Image { .. }) {
+        moderation::scan_image(&buf, mime_type).await
+    } else {
+        None
+    };
+
     // Virus scan files if ClamAV is configured
     if matches!(metadata, Metadata::File)
         && (config.files.scan_mime_types.is_empty()
@@ -304,6 +317,7 @@ async fn upload_file(
         metadata,
         content_type: mime_type.to_owned(),
         size: new_file_size as isize,
+        image_moderation,
     };
 
     // Add attachment hash if it doesn't exist

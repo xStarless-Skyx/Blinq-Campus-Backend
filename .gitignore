@@ -14,4 +14,4 @@ venv/
 livekit.yml
 .idea
 crates/delta/src/routes/oauth/google.rs
-
+/Users/gabrielgrundy/Blinq-Campus-Backend/crates/delta/src/routes/oauth/google.rs

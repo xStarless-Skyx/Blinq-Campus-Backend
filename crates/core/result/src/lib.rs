@@ -175,6 +175,7 @@ pub enum ErrorType {
     FileTypeNotAllowed,
     ImageProcessingFailed,
     NoEmbedData,
+    MessageBlockedLanguage,
 
     // ? Legacy errors
     VosoUnavailable,

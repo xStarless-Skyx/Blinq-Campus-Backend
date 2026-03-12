@@ -95,6 +95,7 @@ impl<'r> Responder<'r, 'static> for Error {
             ErrorType::FileTypeNotAllowed => Status::BadRequest,
             ErrorType::ImageProcessingFailed => Status::InternalServerError,
             ErrorType::NoEmbedData => Status::BadRequest,
+            ErrorType::MessageBlockedLanguage => Status::BadRequest,
             ErrorType::VosoUnavailable => Status::BadRequest,
         };
 

@@ -1,6 +1,6 @@
 use iso8601_timestamp::Timestamp;
 
-use crate::File;
+use crate::{File, ImageModeration};
 
 auto_derived_partial!(
     /// File hash
@@ -27,6 +27,10 @@ auto_derived_partial!(
         pub content_type: String,
         /// Size of this file (in bytes)
         pub size: isize,
+
+        /// Image moderation results (if applicable)
+        #[serde(skip_serializing_if = "Option::is_none")]
+        pub image_moderation: Option<ImageModeration>,
     },
     "PartialFileHash"
 );
@@ -81,6 +85,7 @@ impl FileHash {
             metadata: self.metadata.clone(),
             content_type: self.content_type.clone(),
             size: self.size,
+            image_moderation: self.image_moderation.clone(),
 
             // TODO: superseded by "used_for"
             message_id: None,

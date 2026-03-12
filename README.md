@@ -32,14 +32,23 @@ Docker dependencies:
 Optional but recommended:
 - `mise` (if you use the project toolchain bootstrap)
 
-## Quick Start (Backend Only)
+## Quick Start
 
-From the repo root:
+From the repo root (macOS/Linux):
 
 ```bash
 docker compose up -d
 ./scripts/start.sh
 ```
+
+From the repo root (Windows, PowerShell):
+
+```powershell
+docker compose up -d
+.\scripts\start.ps1
+```
+
+`start.sh` (macOS/Linux) and `start.ps1` (Windows) now also start the local Caddy reverse proxy and the docs/frontend dev server by default. If port `14701` is already in use, the docs server is skipped. You can opt out explicitly with `--no-caddy` or `--no-docs`.
 
 Expected startup lines include:
 - `Starting blinqcampus-api (revolt-delta)`
@@ -57,16 +66,35 @@ lsof -nP -iTCP:14702 -sTCP:LISTEN
 lsof -nP -iTCP:14703 -sTCP:LISTEN
 ```
 
+On Linux (alternative to `lsof`):
+
+```bash
+ss -ltnp | rg ':14702|:14703'
+```
+
+On Windows (PowerShell):
+
+```powershell
+netstat -ano | findstr :14702
+netstat -ano | findstr :14703
+```
+
 Health checks:
 - API: `http://localhost:14702`
 - Events WS: `ws://localhost:14703`
 
 ## Stop Services
 
-Stop Rust services started by `start.sh`:
+Stop Rust services started by `start.sh` (macOS/Linux):
 
 ```bash
 pkill -f 'target/debug/revolt-'
+```
+
+On Windows:
+
+```powershell
+taskkill /F /IM revolt-*.exe
 ```
 
 Stop Docker dependencies:
