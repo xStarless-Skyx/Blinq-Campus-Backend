@@ -1,42 +1,60 @@
 # Build Stage
-FROM --platform="${BUILDPLATFORM}" rust:1.92.0-slim-bookworm
+FROM rust:1.92.0-slim-bookworm AS builder
 USER 0:0
 WORKDIR /home/rust/src
 
-ARG TARGETARCH
+ARG SERVICE=api
 
-# Install build requirements
-RUN dpkg --add-architecture "${TARGETARCH}"
+# Human-readable service names mapped to workspace binaries:
+# api -> revolt-delta
+# events -> revolt-bonfire
+# files -> revolt-autumn
+# metadata -> revolt-january
+# gifbox -> revolt-gifbox
+# crond -> revolt-crond
+# pushd -> revolt-pushd
+# voice-ingress -> revolt-voice-ingress
+
+ENV CARGO_BUILD_JOBS=1 \
+    CARGO_INCREMENTAL=0 \
+    CARGO_PROFILE_RELEASE_LTO=false \
+    RUSTFLAGS="-C debuginfo=0"
+
+# Install standard build requirements
 RUN apt-get update && \
     apt-get install -y \
     make \
     pkg-config \
-    libssl-dev:"${TARGETARCH}"
-COPY scripts/build-image-layer.sh /tmp/
-RUN sh /tmp/build-image-layer.sh tools
+    libssl-dev \
+    gcc && \
+    rm -rf /var/lib/apt/lists/*
 
-# Build all dependencies
 COPY Cargo.toml Cargo.lock ./
-COPY crates/bonfire/Cargo.toml ./crates/bonfire/
-COPY crates/delta/Cargo.toml ./crates/delta/
-COPY crates/core/config/Cargo.toml ./crates/core/config/
-COPY crates/core/database/Cargo.toml ./crates/core/database/
-COPY crates/core/files/Cargo.toml ./crates/core/files/
-COPY crates/core/models/Cargo.toml ./crates/core/models/
-COPY crates/core/parser/Cargo.toml ./crates/core/parser/
-COPY crates/core/permissions/Cargo.toml ./crates/core/permissions/
-COPY crates/core/presence/Cargo.toml ./crates/core/presence/
-COPY crates/core/result/Cargo.toml ./crates/core/result/
-COPY crates/core/coalesced/Cargo.toml ./crates/core/coalesced/
-COPY crates/core/ratelimits/Cargo.toml ./crates/core/ratelimits/
-COPY crates/services/autumn/Cargo.toml ./crates/services/autumn/
-COPY crates/services/january/Cargo.toml ./crates/services/january/
-COPY crates/services/gifbox/Cargo.toml ./crates/services/gifbox/
-COPY crates/daemons/crond/Cargo.toml ./crates/daemons/crond/
-COPY crates/daemons/pushd/Cargo.toml ./crates/daemons/pushd/
-COPY crates/daemons/voice-ingress/Cargo.toml ./crates/daemons/voice-ingress/
-RUN sh /tmp/build-image-layer.sh deps
-
-# Build all apps
 COPY crates ./crates
-RUN sh /tmp/build-image-layer.sh apps
+
+# Build only the selected service to keep Docker memory usage manageable.
+RUN case "${SERVICE}" in \
+        api) APP="revolt-delta" ;; \
+        events) APP="revolt-bonfire" ;; \
+        files) APP="revolt-autumn" ;; \
+        metadata) APP="revolt-january" ;; \
+        gifbox) APP="revolt-gifbox" ;; \
+        crond) APP="revolt-crond" ;; \
+        pushd) APP="revolt-pushd" ;; \
+        voice-ingress) APP="revolt-voice-ingress" ;; \
+        *) echo "Unsupported SERVICE: ${SERVICE}" >&2; exit 1 ;; \
+    esac && \
+    cargo build --locked --release --package "${APP}" --bin "${APP}" && \
+    cp "target/release/${APP}" "/usr/local/bin/service-bin"
+
+# Final Runtime Stage
+FROM debian:bookworm-slim
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y libssl3 ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /usr/local/bin/service-bin /usr/local/bin/service-bin
+
+CMD ["/usr/local/bin/service-bin"]

@@ -7,7 +7,7 @@
 
 https://local.blinqcampus.chat:24701 {
 	bind 127.0.0.1
-	reverse_proxy [::1]:14701
+	reverse_proxy 127.0.0.1:8080
 }
 
 https://local.blinqcampus.chat:24702 {

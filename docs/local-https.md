@@ -17,7 +17,7 @@ Ensure local DNS host exists:
 
 ```bash
 echo "127.0.0.1 local.blinqcampus.chat" | sudo tee -a /etc/hosts
-echo "127.0.0.1 local.revolt.chat" | sudo tee -a /etc/hosts
+echo "127.0.0.1 local.blinqcampus.chat" | sudo tee -a /etc/hosts
 ```
 
 Trust Caddy's local CA once:
@@ -38,7 +38,7 @@ Add host entries (run as Administrator):
 
 ```powershell
 Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n127.0.0.1 local.blinqcampus.chat"
-Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n127.0.0.1 local.revolt.chat"
+Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n127.0.0.1 local.blinqcampus.chat"
 ```
 
 Trust Caddy's local CA once:
@@ -80,18 +80,18 @@ Windows (PowerShell):
 ```
 
 This proxies:
+- `https://local.blinqcampus.chat:24701` -> `http://127.0.0.1:8080`
+- `https://local.blinqcampus.chat:24702` -> `http://127.0.0.1:14702`
+- `https://local.blinqcampus.chat:24703` -> `http://127.0.0.1:14703`
+- `https://local.blinqcampus.chat:24704` -> `http://127.0.0.1:14704`
+- `https://local.blinqcampus.chat:24705` -> `http://127.0.0.1:14705`
+- `https://local.blinqcampus.chat:24706` -> `http://127.0.0.1:14706`
 - `https://local.blinqcampus.chat:24701` -> `http://127.0.0.1:14701`
 - `https://local.blinqcampus.chat:24702` -> `http://127.0.0.1:14702`
 - `https://local.blinqcampus.chat:24703` -> `http://127.0.0.1:14703`
 - `https://local.blinqcampus.chat:24704` -> `http://127.0.0.1:14704`
 - `https://local.blinqcampus.chat:24705` -> `http://127.0.0.1:14705`
 - `https://local.blinqcampus.chat:24706` -> `http://127.0.0.1:14706`
-- `https://local.revolt.chat:24701` -> `http://127.0.0.1:14701`
-- `https://local.revolt.chat:24702` -> `http://127.0.0.1:14702`
-- `https://local.revolt.chat:24703` -> `http://127.0.0.1:14703`
-- `https://local.revolt.chat:24704` -> `http://127.0.0.1:14704`
-- `https://local.revolt.chat:24705` -> `http://127.0.0.1:14705`
-- `https://local.revolt.chat:24706` -> `http://127.0.0.1:14706`
 
 ## 4. Google OAuth values
 

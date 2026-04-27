@@ -159,6 +159,10 @@ if [ "$start_docs" -eq 1 ]; then
   fi
 fi
 
+if [ "$start_caddy" -eq 1 ]; then
+  "$ROOT_DIR/scripts/start-caddy-local.sh" --check
+fi
+
 wait_for_port "127.0.0.1" "27017" "MongoDB"
 wait_for_port "127.0.0.1" "6379" "Redis"
 wait_for_port "127.0.0.1" "5672" "RabbitMQ"
@@ -178,9 +182,15 @@ if [ "$start_docs" -eq 1 ]; then
     exit 1
   fi
 
-  if [ ! -d "$ROOT_DIR/docs/node_modules" ]; then
+  if [ ! -x "$ROOT_DIR/docs/node_modules/.bin/docusaurus" ]; then
     echo "Installing docs dependencies..."
     (cd "$ROOT_DIR/docs" && npm install)
+  fi
+
+  if [ ! -x "$ROOT_DIR/docs/node_modules/.bin/docusaurus" ]; then
+    echo "Docs dependencies are incomplete (missing docusaurus CLI)." >&2
+    echo "Run: (cd docs && npm install), or retry with --no-docs." >&2
+    exit 1
   fi
 
   echo "Starting docs site (npm)..."

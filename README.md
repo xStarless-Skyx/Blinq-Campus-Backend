@@ -26,7 +26,7 @@ Docker dependencies:
 ## Prerequisites
 
 - Rust toolchain (`cargo`, `rustc`)
-- Docker Desktop (running)
+- Docker Desktop 
 - `docker compose`
 
 Optional but recommended:
@@ -38,7 +38,7 @@ From the repo root (macOS/Linux):
 
 ```bash
 docker compose up -d
-./scripts/start.sh
+./scripts/start.sh --no-docs
 ```
 
 From the repo root (Windows, PowerShell):
